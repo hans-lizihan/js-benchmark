@@ -12,7 +12,7 @@ async function waitForSelector(page: Page, selector: string) {
     }
     await page.waitForTimeout(1000);
   }
-  throw `waitForElementNotLocatedByXPath failed for ${selector};`;
+  throw `waitForSelector failed for ${selector};`;
 }
 
 export async function waitForElementNotLocatedByXPath(page: Page, selector: string) {

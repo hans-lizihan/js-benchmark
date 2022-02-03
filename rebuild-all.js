@@ -48,6 +48,9 @@ for (f of buildable) {
     console.log("BUILDING ", f);
     let [keyed,name] = f;
     let path = `frameworks/${keyed}/${name}`;
+    if (fs.existsSync(path + '/node_modules')) {
+      continue;
+    }
     if (!fs.existsSync(path+"/package.json")) {
       console.log("WARN: skipping ", f, " since there's no package.json");    
     } else {
@@ -65,10 +68,14 @@ for (f of buildable) {
 
       let install_cmd = `npm ${ci ? 'ci' : 'install'} && npm run build-prod`;
       console.log(install_cmd);
-      exec(install_cmd, {
-        cwd: path,
-        stdio: 'inherit'
-      });
+      try {
+        exec(install_cmd, {
+          cwd: path,
+          stdio: 'inherit'
+        });
+      } catch (e) {
+        console.log(e);
+      }
 
       if (docker) {
         let packageLockPath = path+"/package-lock.json";
