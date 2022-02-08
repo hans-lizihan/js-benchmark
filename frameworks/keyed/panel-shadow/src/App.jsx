@@ -58,7 +58,7 @@ const Jumbotron = defineAndMakeJsxFactory('p-jumbotron', class extends Component
           <div sel=".jumbotron">
             <div sel=".row">
               <div sel=".col-md-6">
-                <h1>Panel (non-keyed)</h1>
+                <h1>Panel shadow DOM</h1>
               </div>
               <div sel=".col-md-6">
                 <div sel=".row">
