@@ -120,44 +120,6 @@ const Row = defineAndMakeJsxFactory('benchmark-row', class extends Component {
           }))
         },
       },
-      useShadowDom: true,
-      css: `
-        :host {
-          display: table-row;
-        }
-        td {
-          position: static;
-          display: table-cell;
-          float: none;
-          padding: 8px;
-          line-height: 1.42857143;
-          vertical-align: top;
-          border-top: 1px solid #ddd;
-        }
-        tr.danger {
-          background: #f2dede;
-        }
-        .glyphicon {
-          position: relative;
-          top: 1px;
-          display: inline-block;
-          font-family: 'Glyphicons Halflings';
-          font-style: normal;
-          font-weight: 400;
-          line-height: 1;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-        .glyphicon-remove:before {
-          content: "\\e014";
-        }
-        .col-md-4 {
-          width: 33.33333333%;
-        }
-        .col-md-1 {
-          width: 8.33333333%;
-        }
-      `,
       template() {
         return (
           <tr

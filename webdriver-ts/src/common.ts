@@ -68,6 +68,7 @@ export interface FrameworkData {
   name: string;
   fullNameWithKeyedAndVersion: string;
   uri: string;
+  customElementRow: string;
   keyed: boolean;
   useShadowRoot: boolean;
   useRowShadowRoot: boolean;
@@ -103,7 +104,8 @@ abstract class FrameworkVersionInformationValid implements FrameworkId {
     public useRowShadowRoot: boolean,
     public shadowRootName: string,
     public buttonsInShadowRoot: boolean,
-    public issues: number[]
+    public issues: number[],
+    public customElementRow: string,
   ) {
     this.keyedType = keyedType;
     this.directory = directory;
@@ -121,9 +123,10 @@ export class FrameworkVersionInformationDynamic extends FrameworkVersionInformat
     useRowShadowRoot: boolean = false,
     public shadowRootName: string,
     public buttonsInShadowRoot: boolean,
-    issues: number[]
+    issues: number[],
+    customElementRow: string,
   ) {
-    super(keyedType, directory, customURL, useShadowRoot, useRowShadowRoot, shadowRootName, buttonsInShadowRoot, issues);
+    super(keyedType, directory, customURL, useShadowRoot, useRowShadowRoot, shadowRootName, buttonsInShadowRoot, issues, customElementRow);
   }
 }
 
@@ -137,15 +140,17 @@ export class FrameworkVersionInformationStatic extends FrameworkVersionInformati
     useRowShadowRoot: boolean = false,
     public shadowRootName: string,
     public buttonsInShadowRoot: boolean,
-    issues: number[]
+    issues: number[],
+    customElementRow: string,
   ) {
-    super(keyedType, directory, customURL, useShadowRoot, useRowShadowRoot, shadowRootName, buttonsInShadowRoot, issues);
+    super(keyedType, directory, customURL, useShadowRoot, useRowShadowRoot, shadowRootName, buttonsInShadowRoot, issues, customElementRow);
   }
   getFrameworkData(): FrameworkData {
     return {
       name: this.directory,
       fullNameWithKeyedAndVersion: this.directory + (this.frameworkVersion ? "-v" + this.frameworkVersion : "") + "-" + this.keyedType,
       uri: this.url,
+      customElementRow: this.customElementRow || "",
       keyed: this.keyedType === "keyed",
       useShadowRoot: this.useShadowRoot,
       useRowShadowRoot: this.useRowShadowRoot,
@@ -226,7 +231,8 @@ async function loadFrameworkInfo(pathInFrameworksDir: string): Promise<Framework
           packageJSON["js-framework-benchmark"]["useRowShadowRoot"],
           packageJSON["js-framework-benchmark"]["shadowRootName"] ?? "main-element",
           packageJSON["js-framework-benchmark"]["buttonsInShadowRoot"] ?? true,
-          packageJSON["js-framework-benchmark"]["issues"]
+          packageJSON["js-framework-benchmark"]["issues"],
+          packageJSON["js-framework-benchmark"]["customElementRow"],
         );
       } else if (typeof packageJSON["js-framework-benchmark"]["frameworkVersion"] === "string") {
         return new FrameworkVersionInformationStatic(
@@ -238,7 +244,8 @@ async function loadFrameworkInfo(pathInFrameworksDir: string): Promise<Framework
           packageJSON["js-framework-benchmark"]["useRowShadowRoot"],
           packageJSON["js-framework-benchmark"]["shadowRootName"] ?? "main-element",
           packageJSON["js-framework-benchmark"]["buttonsInShadowRoot"] ?? true,
-          packageJSON["js-framework-benchmark"]["issues"]
+          packageJSON["js-framework-benchmark"]["issues"],
+          packageJSON["js-framework-benchmark"]["customElementRow"] ?? "",
         );
       } else {
         return new FrameworkVersionInformationError(
@@ -295,6 +302,7 @@ export class PackageVersionInformationResult {
       shadowRootName: this.framework.shadowRootName,
       buttonsInShadowRoot: this.framework.buttonsInShadowRoot,
       issues: this.framework.issues,
+      customElementRow: this.framework.customElementRow,
     };
   }
 }

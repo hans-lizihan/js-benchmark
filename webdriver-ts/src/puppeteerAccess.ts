@@ -81,6 +81,7 @@ export async function startBrowser(benchmarkOptions: BenchmarkDriverOptions): Pr
     executablePath: browserPath(benchmarkOptions),
     ignoreDefaultArgs: ["--enable-automation"],
     args: [`--window-size=${window_width},${window_height}`],
+    devtools: true,
     dumpio: false,
     defaultViewport: {
       width,

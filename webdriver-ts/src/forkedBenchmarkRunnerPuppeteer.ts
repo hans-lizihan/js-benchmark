@@ -82,6 +82,10 @@ async function runMemBenchmark(
     browser = await startBrowser(benchmarkOptions);
     for (let i = 0; i < benchmarkOptions.batchSize; i++) {
       const page = await browser.newPage();
+      await page.tracing.start({
+        path: `tests/logs/${framework.fullNameWithKeyedAndVersion}-${benchmark.id}-${new Date().getTime()}.json`,
+        screenshots: true
+      });
       if (config.LOG_DETAILS) {
         page.on("console", (msg) => {
           for (let i = 0; i < msg.args().length; ++i) console.log(`BROWSER: ${msg.args()[i]}`);
@@ -112,6 +116,7 @@ async function runMemBenchmark(
       results.push(result);
       console.log(`memory result for ${framework.name} and ${benchmark.id}: ${result}`);
       if (result < 0) throw new Error(`memory result ${result} < 0`);
+      await page.tracing.stop();
       await page.close();
     }
     await browser.close();

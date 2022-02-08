@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "js-framework-benchmark": {
-    "name": "panel-shadow-dom",
+    "name": "panel-wc",
     "frameworkVersionFromPackage": "panel",
-    "useRowShadowRoot": true
+    "customElementRow": "benchmark-row"
   },
   "scripts": {
     "build-dev": "rollup -c -w",

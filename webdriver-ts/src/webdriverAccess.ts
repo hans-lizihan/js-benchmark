@@ -11,6 +11,11 @@ let useShadowRoot = false;
 let useRowShadowRoot = false;
 let shadowRootName = "";
 let buttonsInShadowRoot = false;
+let customRowElement = "";
+
+export function setCustomRowElement(el: string) {
+  customRowElement = el;
+}
 
 export function setUseShadowRoot(val: boolean) {
   useShadowRoot = val;
@@ -66,6 +71,16 @@ export async function findByXPath(driver: WebDriver, path: string, isInButtonAre
         try {
           const shadowHost = await shadowRoot(driver, `benchmark-row:nth-of-type(${p.index})`);
           elem = await shadowHost.findElement(By.tagName("tr"));
+          if (elem === null) {
+            return null;
+          }
+        } catch (err) {
+          return null;
+        }
+      } else if (customRowElement && p.tagName === "tr") {
+        try {
+          const el = await driver.findElement(By.css(`${customRowElement}:nth-of-type(${p.index})`));
+          elem = await el.findElement(By.tagName("tr"));
           if (elem === null) {
             return null;
           }

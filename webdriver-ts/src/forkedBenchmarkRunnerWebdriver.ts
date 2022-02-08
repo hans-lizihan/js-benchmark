@@ -1,6 +1,6 @@
 import { WebDriver, logging } from "selenium-webdriver";
 import { BenchmarkWebdriver, benchmarksWebdriver, LighthouseData } from "./benchmarksWebdriver";
-import { setUseShadowRoot, buildDriver, setUseRowShadowRoot, setShadowRootName, setButtonsInShadowRoot } from "./webdriverAccess";
+import { setCustomRowElement, setUseShadowRoot, buildDriver, setUseRowShadowRoot, setShadowRootName, setButtonsInShadowRoot,  } from "./webdriverAccess";
 
 const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
@@ -330,6 +330,7 @@ async function runCPUBenchmark(
       setUseRowShadowRoot(framework.useRowShadowRoot);
       setShadowRootName(framework.shadowRootName);
       setButtonsInShadowRoot(framework.buttonsInShadowRoot);
+      setCustomRowElement(framework.customElementRow);
       await driver.get(`http://localhost:${benchmarkOptions.port}/${framework.uri}/index.html`);
 
       // await (driver as any).sendDevToolsCommand('Network.enable');

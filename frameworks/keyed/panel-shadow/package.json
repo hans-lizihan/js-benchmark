@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "js-framework-benchmark": {
-    "name": "panel-shadow-dom",
+    "name": "panel-shadow",
     "frameworkVersionFromPackage": "panel",
     "useRowShadowRoot": true
   },
